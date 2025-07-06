@@ -20,8 +20,32 @@ export class CarsService {
         const car = this.cars.find(car => car.id === id);
 
         if (!car) throw new NotFoundException(`Car with ID ${id} not found`);
-        
+
         return car;
+    }
+
+    createCar(carData: any) {
+        const newCar = { id: this.cars.length + 1, ...carData };
+        this.cars.push(newCar);
+        return newCar;
+    }
+
+    updateCar(id: number, carData: any) {
+        const carIndex = this.cars.findIndex(car => car.id === id);
+
+        if (carIndex === -1) throw new NotFoundException(`Car with ID ${id} not found`);
+
+        this.cars[carIndex] = { ...this.cars[carIndex], ...carData };
+        return this.cars[carIndex];
+    }
+
+    deleteCar(id: number) {
+        const carIndex = this.cars.findIndex(car => car.id === id);
+
+        if (carIndex === -1) throw new NotFoundException(`Car with ID ${id} not found`);
+
+        this.cars.splice(carIndex, 1);
+        return { deleted: true };
     }
 
 }
