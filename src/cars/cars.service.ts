@@ -53,12 +53,8 @@ export class CarsService {
     }
 
     deleteCar(id: string) {
-        const carIndex = this.cars.findIndex(car => car.id === id);
-
-        if (carIndex === -1) throw new NotFoundException(`Car with ID ${id} not found`);
-
-        this.cars.splice(carIndex, 1);
-        return { deleted: true };
+        const carToDelete = this.findById(id);
+        this.cars = this.cars.filter(car => car.id !== id);
     }
 
 }
