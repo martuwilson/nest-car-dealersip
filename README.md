@@ -1,12 +1,6 @@
 
 # 🚗 Car Dealership API
 
-Una API REST mod### 🏷️ Datos de Marca
-
-Cada mar### 🏷️ Marcas
-
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
 #### 🏷️ Marcas
 - **Nombre**: Debe ser string con mínimo 3 caracteres
 - **UUID**: Debe ser un UUID ## 🚀 Próximas Funcionalidades
