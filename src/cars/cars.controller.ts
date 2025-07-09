@@ -3,7 +3,7 @@ import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
 
 @Controller('cars')
-@UsePipes(ValidationPipe) //usePipes a nivel de controlador para validar todos los DTOs
+//@UsePipes(ValidationPipe) //usePipes a nivel de controlador para validar todos los DTOs
 export class CarsController {
 
     constructor(private readonly carsService: CarsService) {
