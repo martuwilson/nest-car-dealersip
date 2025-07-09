@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post} from '@nestjs/common';
 import { CarsService } from './cars.service';
-import { CreateCarDto } from './dto/create-car.dto';
+import { CreateCarDto, UpdateCarDto } from './dto/index';
+import {  } from './dto/update-car.dto';
 
 @Controller('cars')
 //@UsePipes(ValidationPipe) //usePipes a nivel de controlador para validar todos los DTOs
@@ -26,7 +27,7 @@ export class CarsController {
     }
 
     @Patch(':id')
-    updateCar(@Param('id', ParseUUIDPipe) id: string, @Body() carData: any) {
+    updateCar(@Param('id', ParseUUIDPipe) id: string, @Body() carData: UpdateCarDto) {
         return this.carsService.updateCar(id, carData);
     }
 
