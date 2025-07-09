@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { v4 as uuid } from 'uuid'
 import { Car } from './interfaces/car.interface';
@@ -8,11 +9,11 @@ import { UpdateCarDto } from './dto/update-car.dto';
 export class CarsService {
 
     private cars: Car[] = [
-        { id: uuid(), brand: 'Toyota', model: 'Corolla', year: 2020 },
+        /* { id: uuid(), brand: 'Toyota', model: 'Corolla', year: 2020 },
         { id: uuid(), brand: 'Honda', model: 'Civic', year: 2019 },
         { id: uuid(), brand: 'Ford', model: 'Focus', year: 2018 },
         { id: uuid(), brand: 'Chevrolet', model: 'Malibu', year: 2021 },
-        { id: uuid(), brand: 'Nissan', model: 'Altima', year: 2022 }
+        { id: uuid(), brand: 'Nissan', model: 'Altima', year: 2022 } */
     ];
 
 
@@ -55,6 +56,10 @@ export class CarsService {
     deleteCar(id: string) {
         const carToDelete = this.findById(id);
         this.cars = this.cars.filter(car => car.id !== id);
+    }
+
+    fillWithSeedData(carsSeed: Car[]) {
+        this.cars = carsSeed;
     }
 
 }
