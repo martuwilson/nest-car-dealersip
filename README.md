@@ -1,7 +1,54 @@
 
 # 🚗 Car Dealership API
 
-Una API REST moderna desarrollada con **NestJS** para la gestión completa de un concesionario de automóviles, incluyendo inventario de vehículos y administración de marcas.
+Una API REST mod### 🏷️ Datos de Marca
+
+Cada mar### 🏷️ Marcas
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+#### 🏷️ Marcas
+- **Nombre**: Debe ser string con mínimo 3 caracteres
+- **UUID**: Debe ser un UUID ## 🚀 Próximas Funcionalidades
+
+- 🔗 **Relaciones entre entidades** (Cars ↔ Brands)
+- 🔐 **Autenticación y autorización** (JWT)
+- 💾 **Integración con base de datos** (PostgreSQL/MongoDB)
+- 📸 **Carga de imágenes** de vehículos
+- 🔍 **Filtros avanzados** de búsqueda y paginación
+- 📊 **Dashboard de estadísticas** y reportes
+- 🌱 **Seed automático** en primera ejecución
+- 🔄 **Versionado de API** (v1, v2)
+- 📚 **Documentación con Swagger/OpenAPI**
+- 🧪 **Testing más completo** (unit + e2e)
+- 🌐 **Internacionalización** (i18n)
+- 📱 **API Rate Limiting** y throttling parámetros
+
+#### 🌱 Seed
+- **Nombre**: No aplica (endpoint de utilidad)
+- **Endpoint**: Ejecuta automáticamente el poblado de datosET | `/brands` | Obtener todas las marcas |
+| GET | `/brands/:uuid` | Obtener marca por UUID |
+| POST | `/brands` | Crear nueva marca (con validación) |
+| PATCH | `/brands/:uuid` | Actualizar parcialmente marca |
+| DELETE | `/brands/:uuid` | Eliminar marca |
+
+### 🌱 Seed (Datos Iniciales)
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| GET | `/seed` | Poblar base de datos con datos iniciales |cluye:
+- **ID UUID** único y seguro
+- **Nombre** de la marca - mínimo 3 caracteres
+- **Fecha de creación** (timestamp)
+- **Fecha de actualización** (timestamp, opcional)
+
+### 🌱 Sistema de Seed
+
+El sistema incluye:
+- **Datos iniciales** de marcas (Toyota, Honda, Ford, Chevrolet, Nissan)
+- **Datos iniciales** de vehículos con diferentes marcas y modelos
+- **Reinicio completo** de datos para desarrollo
+- **Configuración automática** con UUIDs y timestampssarrollada con **NestJS** para la gestión completa de un concesionario de automóviles, incluyendo inventario de vehículos y administración de marcas.
 
 ## 📋 Descripción
 
@@ -23,6 +70,11 @@ Esta aplicación proporciona una API completa para gestionar tanto el inventario
 - ✏️ **Actualizar información** de marcas existentes
 - �️ **Eliminar marcas** del sistema
 
+#### 🌱 Sistema de Seed
+- 🎯 **Poblar base de datos** con datos iniciales
+- 🔄 **Reiniciar datos** de desarrollo
+- 🚀 **Configuración rápida** del entorno
+
 #### 🛡️ Características Técnicas
 - �🔒 **Validación robusta** con DTOs y class-validator
 - 🆔 **Identificadores UUID** para mayor seguridad
@@ -38,13 +90,13 @@ Cada vehículo incluye:
 - **Modelo** (Corolla, Civic, Focus, etc.) - mínimo 3 caracteres
 - **Año** de fabricación - debe ser un número válido
 
-### 🏷️ Datos de Marca
+### � Sistema de Seed
 
-Cada marca incluye:
-- **ID UUID** único y seguro
-- **Nombre** de la marca - mínimo 3 caracteres
-- **Fecha de creación** (timestamp)
-- **Fecha de actualización** (timestamp, opcional)
+El sistema incluye:
+- **Datos iniciales** de marcas (Toyota, Honda, Ford, Chevrolet, Nissan)
+- **Datos iniciales** de vehículos con diferentes marcas y modelos
+- **Reinicio completo** de datos para desarrollo
+- **Configuración automática** con UUIDs y timestamps
 
 ## 🚀 API Endpoints
 
@@ -58,15 +110,11 @@ Cada marca incluye:
 | PATCH | `/cars/:uuid` | Actualizar parcialmente vehículo |
 | DELETE | `/cars/:uuid` | Eliminar vehículo |
 
-### 🏷️ Marcas
+### � Seed (Datos Iniciales)
 
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| GET | `/brands` | Obtener todas las marcas |
-| GET | `/brands/:uuid` | Obtener marca por UUID |
-| POST | `/brands` | Crear nueva marca (con validación) |
-| PATCH | `/brands/:uuid` | Actualizar parcialmente marca |
-| DELETE | `/brands/:uuid` | Eliminar marca |
+| GET | `/seed` | Poblar base de datos con datos iniciales |
 
 ### 📝 Ejemplos de Uso
 
@@ -116,6 +164,20 @@ curl -X PATCH http://localhost:3000/brands/550e8400-e29b-41d4-a716-446655440000 
 curl -X DELETE http://localhost:3000/brands/550e8400-e29b-41d4-a716-446655440000
 ```
 
+#### 🌱 Operaciones con Seed
+
+```bash
+# Poblar base de datos con datos iniciales
+curl http://localhost:3000/seed
+
+# Respuesta exitosa
+{
+  "message": "Seed executed successfully"
+}
+```
+
+> **💡 Tip:** Ejecuta el seed después de iniciar la aplicación para tener datos de prueba listos.
+
 ### ⚠️ Validaciones Automáticas
 
 La API valida automáticamente:
@@ -126,9 +188,9 @@ La API valida automáticamente:
 - **Año**: Debe ser un número válido
 - **UUID**: Debe ser un UUID válido en los parámetros
 
-#### 🏷️ Marcas
-- **Nombre**: Debe ser string con mínimo 3 caracteres
-- **UUID**: Debe ser un UUID válido en los parámetros
+#### � Seed
+- **Nombre**: No aplica (endpoint de utilidad)
+- **Endpoint**: Ejecuta automáticamente el poblado de datos
 
 **Ejemplo de error de validación:**
 ```json
@@ -161,6 +223,8 @@ $ npm run start:prod
 ```
 
 🌐 **La API estará disponible en:** `http://localhost:3000`
+
+> **🌱 Recomendación:** Ejecuta `http://localhost:3000/seed` después de iniciar la aplicación para poblar con datos iniciales.
 
 ## 🧪 Ejecutar Pruebas
 
@@ -198,6 +262,13 @@ src/
 │   ├── brands.controller.ts      # Controlador REST
 │   ├── brands.service.ts         # Lógica de negocio
 │   └── brands.module.ts          # Módulo de NestJS
+├── seed/                     # Módulo de seed
+│   ├── data/                 # Datos iniciales
+│   │   ├── cars.seed.ts          # Datos seed para vehículos
+│   │   └── brands.seed.ts        # Datos seed para marcas
+│   ├── seed.controller.ts        # Controlador de seed
+│   ├── seed.service.ts           # Servicio de seed
+│   └── seed.module.ts            # Módulo de seed
 ├── app.module.ts             # Módulo principal
 └── main.ts                   # Punto de entrada
 ```
