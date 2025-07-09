@@ -1,23 +1,34 @@
 
 # 🚗 Car Dealership API
 
-Una API REST moderna desarrollada con **NestJS** para la gestión de inventario de un concesionario de automóviles.
+Una API REST moderna desarrollada con **NestJS** para la gestión completa de un concesionario de automóviles, incluyendo inventario de vehículos y administración de marcas.
 
 ## 📋 Descripción
 
-Esta aplicación proporciona una API completa para gestionar el inventario de vehículos de un concesionario. Permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre el catálogo de automóviles disponibles.
+Esta aplicación proporciona una API completa para gestionar tanto el inventario de vehículos como el catálogo de marcas de un concesionario. Permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre vehículos y marcas de manera independiente.
 
 ### ✨ Características
 
+#### 🚙 Gestión de Vehículos
 - 🔍 **Consultar todos los vehículos** del inventario
 - 🎯 **Buscar vehículo específico** por UUID
 - ➕ **Agregar nuevos vehículos** con validación de datos
 - ✏️ **Actualizar parcialmente** información de vehículos existentes
 - 🗑️ **Eliminar vehículos** del inventario
-- 🔒 **Validación robusta** con DTOs y class-validator
+
+#### 🏷️ Gestión de Marcas
+- 📋 **Consultar todas las marcas** disponibles
+- 🎯 **Buscar marca específica** por UUID
+- ➕ **Crear nuevas marcas** con validación
+- ✏️ **Actualizar información** de marcas existentes
+- �️ **Eliminar marcas** del sistema
+
+#### 🛡️ Características Técnicas
+- �🔒 **Validación robusta** con DTOs y class-validator
 - 🆔 **Identificadores UUID** para mayor seguridad
 - 🛡️ **Manejo de errores** con excepciones HTTP apropiadas
 - 📝 **Documentación de tipos** con TypeScript interfaces
+- ⏰ **Timestamps** de creación y actualización
 
 ### 🚙 Datos del Vehículo
 
@@ -27,7 +38,17 @@ Cada vehículo incluye:
 - **Modelo** (Corolla, Civic, Focus, etc.) - mínimo 3 caracteres
 - **Año** de fabricación - debe ser un número válido
 
+### 🏷️ Datos de Marca
+
+Cada marca incluye:
+- **ID UUID** único y seguro
+- **Nombre** de la marca - mínimo 3 caracteres
+- **Fecha de creación** (timestamp)
+- **Fecha de actualización** (timestamp, opcional)
+
 ## 🚀 API Endpoints
+
+### 🚙 Vehículos
 
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
@@ -37,7 +58,19 @@ Cada vehículo incluye:
 | PATCH | `/cars/:uuid` | Actualizar parcialmente vehículo |
 | DELETE | `/cars/:uuid` | Eliminar vehículo |
 
+### 🏷️ Marcas
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| GET | `/brands` | Obtener todas las marcas |
+| GET | `/brands/:uuid` | Obtener marca por UUID |
+| POST | `/brands` | Crear nueva marca (con validación) |
+| PATCH | `/brands/:uuid` | Actualizar parcialmente marca |
+| DELETE | `/brands/:uuid` | Eliminar marca |
+
 ### 📝 Ejemplos de Uso
+
+#### 🚙 Operaciones con Vehículos
 
 ```bash
 # Obtener todos los autos
@@ -60,12 +93,41 @@ curl -X PATCH http://localhost:3000/cars/550e8400-e29b-41d4-a716-446655440000 \
 curl -X DELETE http://localhost:3000/cars/550e8400-e29b-41d4-a716-446655440000
 ```
 
+#### 🏷️ Operaciones con Marcas
+
+```bash
+# Obtener todas las marcas
+curl http://localhost:3000/brands
+
+# Obtener marca específica por UUID
+curl http://localhost:3000/brands/550e8400-e29b-41d4-a716-446655440000
+
+# Crear nueva marca
+curl -X POST http://localhost:3000/brands \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Audi"}'
+
+# Actualizar marca
+curl -X PATCH http://localhost:3000/brands/550e8400-e29b-41d4-a716-446655440000 \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Audi AG"}'
+
+# Eliminar marca
+curl -X DELETE http://localhost:3000/brands/550e8400-e29b-41d4-a716-446655440000
+```
+
 ### ⚠️ Validaciones Automáticas
 
 La API valida automáticamente:
+
+#### 🚙 Vehículos
 - **Marca**: Debe ser string con mínimo 3 caracteres
 - **Modelo**: Debe ser string con mínimo 3 caracteres  
 - **Año**: Debe ser un número válido
+- **UUID**: Debe ser un UUID válido en los parámetros
+
+#### 🏷️ Marcas
+- **Nombre**: Debe ser string con mínimo 3 caracteres
 - **UUID**: Debe ser un UUID válido en los parámetros
 
 **Ejemplo de error de validación:**
@@ -73,8 +135,7 @@ La API valida automáticamente:
 {
   "statusCode": 400,
   "message": [
-    "Brand must be at least 3 characters long",
-    "Model must be a string"
+    "Name must be at least 3 characters long"
   ],
   "error": "Bad Request"
 }
@@ -128,6 +189,15 @@ src/
 │   ├── cars.controller.ts        # Controlador REST
 │   ├── cars.service.ts           # Lógica de negocio
 │   └── cars.module.ts            # Módulo de NestJS
+├── brands/                   # Módulo de marcas
+│   ├── dto/                  # Data Transfer Objects
+│   │   ├── create-brand.dto.ts   # DTO para crear marca
+│   │   └── update-brand.dto.ts   # DTO para actualizar marca
+│   ├── entities/             # Entidades
+│   │   └── brand.entity.ts       # Entidad Brand
+│   ├── brands.controller.ts      # Controlador REST
+│   ├── brands.service.ts         # Lógica de negocio
+│   └── brands.module.ts          # Módulo de NestJS
 ├── app.module.ts             # Módulo principal
 └── main.ts                   # Punto de entrada
 ```
@@ -144,14 +214,17 @@ src/
 
 ## 🚀 Próximas Funcionalidades
 
-- 🔐 Autenticación y autorización
-- 💾 Integración con base de datos (PostgreSQL/MongoDB)
-- 📸 Carga de imágenes de vehículos
-- 🔍 Filtros avanzados de búsqueda y paginación
-- 📊 Dashboard de estadísticas
-- 🔄 Versionado de API (v1, v2)
-- 📚 Documentación con Swagger/OpenAPI
-- 🧪 Testing más completo (unit + e2e)
+- � **Relaciones entre entidades** (Cars ↔ Brands)
+- �🔐 **Autenticación y autorización** (JWT)
+- 💾 **Integración con base de datos** (PostgreSQL/MongoDB)
+- 📸 **Carga de imágenes** de vehículos
+- 🔍 **Filtros avanzados** de búsqueda y paginación
+- 📊 **Dashboard de estadísticas** y reportes
+- 🔄 **Versionado de API** (v1, v2)
+- 📚 **Documentación con Swagger/OpenAPI**
+- 🧪 **Testing más completo** (unit + e2e)
+- 🌐 **Internacionalización** (i18n)
+- 📱 **API Rate Limiting** y throttling
 
 ## 🤝 Contribuir
 
